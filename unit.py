@@ -27,6 +27,14 @@ class Volume:
     
     def l(self) -> float:
         return self.ml() / 1000
+    
+    def tbsp(self) -> float:
+        # tablespoon
+        return self.ml() / 15
+    
+    def tsp(self) -> float:
+        # teaspoon
+        return self.ml() / 5
 
 Amount = Weight | Count | Volume
 
