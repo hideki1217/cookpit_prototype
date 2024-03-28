@@ -25,11 +25,11 @@ class Recipe:
     detail: Material | Operation
     inputs: tuple["Edible"]
     output_names: tuple[str]
-    
+
     @property
     def outputs(self) -> tuple["Edible"]:
         return tuple(Edible(self, local_name) for local_name in self.output_names)
-    
+
     def materials(self) -> tuple[Material]:
         res = []
 
@@ -80,4 +80,3 @@ class RecipeBuilder:
         }
         op = Operation(name2id[name], name, 'operation')
         return Recipe(op, tuple(inputs), tuple(outputs)).outputs
-    
