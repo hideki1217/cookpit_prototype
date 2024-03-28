@@ -5,12 +5,12 @@ from unit import Weight, Count, Volume
 def main():
     builder = RecipeBuilder()
 
-    x = builder.material("牛肉細切れ", Weight(120))
+    x = builder.material("牛肉細切れ", Weight(120, "g"))
     y = builder.material("にんじん", Count(1))
     z = builder.material("じゃがいも", Count(3))
 
-    a = builder.material("しょうゆ", Volume(6))
-    b = builder.material("砂糖", Volume(6))
+    a = builder.material("しょうゆ", Volume(1, "tbsp"))
+    b = builder.material("砂糖", Volume(2, "tsp"))
 
     y_ = builder.operation("ざく切りにする", (y,), (f"ざく切りにしたもの",))
     z_ = builder.operation("ざく切りにする", (z,), (f"ざく切りにしたもの",))
