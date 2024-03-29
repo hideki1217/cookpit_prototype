@@ -79,6 +79,9 @@ class Recipe:
         f(self)
         return tuple(res)
 
+# Use when you want to emphasize that you are 
+# referring to the last step in the recipe.
+RecipeStep = Recipe
 
 @dataclass
 class Output:
