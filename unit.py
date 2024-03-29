@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Literal
+from typing import Literal, Self
 
 
 class Weight:
@@ -71,3 +71,11 @@ class Timespan:
         if unit == "h":
             return self("m") / 60
         raise KeyError
+    
+    def __add__(self, rhs: Self) -> Self:
+        return Timespan(self._time_s + rhs._time_s, "s")
+    
+    def __sub__(self, rhs: Self) -> Self:
+        return Timespan(self._time_s - rhs._time_s, "s")
+    
+        
