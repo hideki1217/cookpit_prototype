@@ -2,22 +2,30 @@ from pprint import pprint
 from recipe import *
 from unit import Weight, Count, Volume
 
+
 def main():
     builder = RecipeBuilder()
 
-    x = builder.material("牛肉細切れ", Weight(120, "g"))
-    y = builder.material("にんじん", Count(1))
-    z = builder.material("じゃがいも", Count(3))
+    meat = builder.material(Material.from_name("牛肉細切れ"), Weight(120, "g"))
+    carrot = builder.material(Material.from_name("にんじん"), Count(1))
+    potato = builder.material(Material.from_name("じゃがいも"), Count(3))
 
-    a = builder.material("しょうゆ", Volume(1, "tbsp"))
-    b = builder.material("砂糖", Volume(2, "tsp"))
+    soy_sauce = builder.material(Material.from_name("しょうゆ"), Volume(1, "tbsp"))
+    suger = builder.material(Material.from_name("砂糖"), Volume(2, "tsp"))
 
-    y_ = builder.operation("ざく切りにする", (y,), (Output("ざく切りにしたもの"),))
-    z_ = builder.operation("ざく切りにする", (z,), (Output("ざく切りにしたもの"),))
-    ab_ = builder.operation("混ぜ合わせる", (a, b,), (Output("混ぜ合わせたもの"),))
+    cutted_carrot = builder.operation(
+        Operation.from_name("ざく切りにする"), (carrot,), (Output("ざく切りにしたもの"),))
+    catted_potato = builder.operation(
+        Operation.from_name("ざく切りにする"), (potato,), (Output("ざく切りにしたもの"),))
+    mixed_sauce = builder.operation(
+        Operation.from_name("混ぜる"), (soy_sauce, suger,), (Output("混ぜたもの"),))
 
-    recipe = builder.operation("煮る", (x, *y_, *z_, *ab_), (Output("肉じゃが", Timespan(12, "h")), Output("煮汁")))
-    pprint(recipe)
+    nikujaga = builder.operation(
+        Operation.from_name("煮る"),
+        (meat, *cutted_carrot, *catted_potato, *mixed_sauce),
+        (Output("肉じゃが", Timespan(12, "h")), Output("煮汁")))
+
+    pprint(nikujaga)
 
 
 if __name__ == "__main__":
