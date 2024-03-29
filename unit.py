@@ -78,4 +78,12 @@ class Timespan:
     def __sub__(self, rhs: Self) -> Self:
         return Timespan(self._time_s - rhs._time_s, "s")
     
+    def __mul__(self, rhs) -> Self:
+        assert isinstance(rhs, (int, float))
+        return Timespan(self._time_s * rhs, "s")
+    
+    def __truediv__(self, rhs) -> Self:
+        assert isinstance(rhs, (int, float))
+        return Timespan(self._time_s / rhs, "s")
+    
         
