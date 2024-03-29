@@ -57,7 +57,7 @@ OperationMap = tuple[Operation, Any]
 
 @dataclass
 class Recipe:
-    mapper: MaterialMap | OperationMap
+    mapping: MaterialMap | OperationMap
     inputs: tuple["Edible"]
     output_details: tuple["Output"]
 
@@ -70,8 +70,8 @@ class Recipe:
         res = []
 
         def f(recipe: Recipe):
-            if recipe.mapper.kind == "material":
-                res.append(recipe.mapper)
+            if recipe.mapping.kind == "material":
+                res.append(recipe.mapping)
 
             for input in recipe.inputs:
                 f(input.recipe)
