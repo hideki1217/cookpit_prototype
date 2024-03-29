@@ -12,11 +12,11 @@ def main():
     a = builder.material("しょうゆ", Volume(1, "tbsp"))
     b = builder.material("砂糖", Volume(2, "tsp"))
 
-    y_ = builder.operation("ざく切りにする", (y,), (f"ざく切りにしたもの",))
-    z_ = builder.operation("ざく切りにする", (z,), (f"ざく切りにしたもの",))
-    ab_ = builder.operation("混ぜ合わせる", (a, b,), (f"混ぜ合わせたもの",))
+    y_ = builder.operation("ざく切りにする", (y,), (Output("ざく切りにしたもの"),))
+    z_ = builder.operation("ざく切りにする", (z,), (Output("ざく切りにしたもの"),))
+    ab_ = builder.operation("混ぜ合わせる", (a, b,), (Output("混ぜ合わせたもの"),))
 
-    recipe = builder.operation("煮る", (x, *y_, *z_, *ab_), ("肉じゃが", "煮汁"))
+    recipe = builder.operation("煮る", (x, *y_, *z_, *ab_), (Output("肉じゃが", Timespan(12, "h")), Output("煮汁")))
     pprint(recipe)
 
 

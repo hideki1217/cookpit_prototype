@@ -1,6 +1,6 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, asdict
 from typing import Literal, Sequence
-from unit import Amount
+from unit import Amount, Timespan
 
 
 @dataclass
@@ -24,11 +24,12 @@ class Operation(Attribute):
 class Recipe:
     detail: Material | Operation
     inputs: tuple["Edible"]
-    output_names: tuple[str]
+    output_details: tuple["Output"]
 
     @property
     def outputs(self) -> tuple["Edible"]:
-        return tuple(Edible(self, local_name) for local_name in self.output_names)
+        return tuple(
+            Edible(recipe=self, **asdict(details)) for details in self.output_details)
 
     def materials(self) -> tuple[Material]:
         res = []
@@ -45,9 +46,17 @@ class Recipe:
 
 
 @dataclass
+class Output:
+    name: str
+    expiration_time: Timespan | None = None
+
+
+@dataclass
 class Edible:
+    # NOTE: Edible must has Output's fields, hard coded.
+    name: str
+    expiration_time: Timespan | None
     recipe: Recipe
-    local_name: str
 
 
 class RecipeBuilder:
@@ -64,9 +73,9 @@ class RecipeBuilder:
             "砂糖": 4,
         }
         material = Material(name2id[name], name, "material", amount)
-        return Recipe(material, [], (name, )).outputs[0]
+        return Recipe(material, [], (Output(name), )).outputs[0]
 
-    def operation(self, name: str, inputs: Sequence[Edible], outputs: Sequence[str]) -> tuple[Edible]:
+    def operation(self, name: str, inputs: Sequence[Edible], outputs: Sequence[Output]) -> tuple[Edible]:
         # TODO: hard code
         name2id = {
             "蒸す": 0,
